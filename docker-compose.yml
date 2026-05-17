@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # PostgreSQL - Banco de dados principal
+  postgres:
+    image: postgres:16-alpine
+    container_name: sprintup-postgres
+    environment:
+      POSTGRES_DB: sprintup_dev
+      POSTGRES_USER: sprintup_user
+      POSTGRES_PASSWORD: sprintup_password
+    ports:
+      - "5432:5432"
+    volumes:
+      # Persistir dados do banco entre restarts
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sprintup_user -d sprintup_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sprintup-network
+
+  # PgAdmin - Interface web para gerenciar PostgreSQL (opcional, para debug)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: sprintup-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@sprintup.local
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - sprintup-network
+
+volumes:
+  postgres_data:
+
+networks:
+  sprintup-network:
+    driver: bridge
