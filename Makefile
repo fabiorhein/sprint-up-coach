@@ -47,7 +47,7 @@ build: restore
 ## test: Executa testes unitários
 test:
 	@echo "$(BLUE)[TEST] Executando testes...$(NC)"
-	$(DOTNET) test $(TEST_PROJECT) --no-build --logger "console;verbosity=normal"
+	$(DOTNET) test $(TEST_PROJECT) --configuration Release --logger "console;verbosity=normal"
 
 ## harness: O COMANDO PRINCIPAL - Valida TUDO (Build + Testes)
 ## Este é o comando que o Aider vai rodar após implementar uma spec

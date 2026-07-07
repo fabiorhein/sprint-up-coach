@@ -1,0 +1,48 @@
+@page "/register"
+@using Microsoft.AspNetCore.Components.Forms
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@rendermode InteractiveServer
+
+<h3>RegisterUserPage</h3>
+
+<EditForm Model="@model" OnValidSubmit="@HandleRegistration" OnInvalidSubmit="@HandleInvalidRegistration">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <InputText id="email" @bind-Value="model.Email" class="form-control" />
+        <ValidationMessage For="@(() => model.Email)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">Senha</label>
+        <InputText id="password" @bind-Value="model.Password" type="password" class="form-control" />
+        <ValidationMessage For="@(() => model.Password)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirmar Senha</label>
+        <InputText id="confirmPassword" @bind-Value="model.ConfirmPassword" type="password" class="form-control" />
+        <ValidationMessage For="@(() => model.ConfirmPassword)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Registrar</button>
+</EditForm>
+
+@code {
+    private RegisterUserDto model = new RegisterUserDto();
+
+    private void HandleRegistration()
+    {
+        // Logic for valid form submission will go here
+        Console.WriteLine("Formulário Válido Submetido!");
+        // TODO: Call the handler
+    }
+
+    private void HandleInvalidRegistration()
+    {
+        // Logic for invalid form submission
+        Console.WriteLine("Formulário Inválido Submetido!");
+    }
+}
